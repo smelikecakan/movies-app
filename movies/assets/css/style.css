@@ -165,7 +165,7 @@ header .logo {
   opacity: 0.5;
   transition: var(--transition-short);
 }
-.search-btn:is(:hover, :focus-visible) {
+.search-btn:is(:hover, :focus-visible) img {
   opacity: 1;
 }
 .menu-btn.active .menu,
