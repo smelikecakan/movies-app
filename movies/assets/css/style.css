@@ -139,6 +139,11 @@ body {
     transform: rotate(1turn);
   }
 }
+.title {
+  font-size: var(--fs-title);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.5;
+}
 
 header {
   position: relative;
@@ -231,4 +236,46 @@ header .logo {
 }
 .search-wrapper:focus-within .leading-icon {
   opacity: 0;
+}
+.sidebar {
+  position: absolute;
+  background-color: var(--background);
+  top: 96px;
+  bottom: 0;
+  left: -340px;
+  max-width: 340px;
+  width: 100%;
+  border-block-start: 1px solid var(--banner-background);
+  overflow-y: overlay;
+  z-index: 4;
+  visibility: hidden;
+  transition: var(--transition-long);
+}
+.sidebar.active {
+  transform: translateX(340px);
+  visibility: visible;
+}
+.sidebar-inner {
+  display: grid;
+  gap: 20px;
+  padding-block: 36px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+.sidebar:is(:hover, :focus-within)::-webkit-scrollbar-thumb {
+  background-color: var(--banner-background);
+}
+
+.sidebar::-webkit-scrollbar-button {
+  height: 16px;
+}
+
+.sidebar-list,
+.sidebar-footer {
+  padding-inline: 36px;
+}
+.sidebar-link {
+  color: var(--on-surface-variant);
+  transition: var(--transition-short);
 }
