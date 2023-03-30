@@ -5,6 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Movies</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -15,5 +19,57 @@
     <script src="./assets/js/global.js"></script>
     <script src="./assets/js/index.js"></script>
   </head>
-  <body></body>
+  <body>
+    <header>
+      <a href="#" class="logo"><i class="bx bx-movie">Movies</i></a>
+
+      <div class="search-box" search-box>
+        <div class="search-wrapper" search-wrapper>
+          <input
+            type="text"
+            name="search"
+            aria-label="search movies"
+            placeholder="search movies"
+            class="search-field"
+            search-field
+            autocomplete="off"
+          />
+          <img
+            src="./assets/images/search.png"
+            width="24"
+            height="24"
+            alt="search"
+            class="leading-icon"
+          />
+        </div>
+        <button class="search-btn" search-toggler>
+          <img src="./assets/images/close.png" width="24" height="24" alt="" />
+        </button>
+      </div>
+      <div class="search-btn" search-toggler menu-close>
+        <img
+          src="./assets/images/search.png"
+          width="24"
+          height="24"
+          alt="open search box"
+        />
+      </div>
+      <button class="menu-btn" menu-btn menu-toggler>
+        <img
+          src="./assets/images/menu.png"
+          width="24"
+          height="24"
+          alt="open menu"
+          class="menu"
+        />
+        <img
+          src="./assets/images/menu-close.png"
+          width="24"
+          height="24"
+          alt="open menu"
+          class="close"
+        />
+      </button>
+    </header>
+  </body>
 </html>
