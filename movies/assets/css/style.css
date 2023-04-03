@@ -272,6 +272,18 @@ body {
   max-width: 500px;
   width: calc(100%-40px);
 }
+.container::after,
+.search-modal::after {
+  content: "";
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  background-image: linear-gradient(var(--bottom-overlay));
+  z-index: 1;
+  pointer-events: none;
+}
 
 header {
   position: relative;
@@ -461,17 +473,6 @@ header .logo {
   height: calc(100vh - 96px);
   overflow-y: overlay;
   z-index: 1;
-}
-.container::after {
-  content: "";
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 150px;
-  background-image: linear-gradient(var(--bottom-overlay));
-  z-index: 1;
-  pointer-events: none;
 }
 
 .banner {
@@ -664,11 +665,32 @@ header .logo {
 
 .grid-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   column-gap: 16px;
   row-gap: 20px;
 }
-
-.genre-list :is(.movie-card, .card-banner) {
+:is(.genre-list, .search-modal):is(.movie-card, .card-banner) {
   width: 100%;
+}
+
+.search-modal {
+  position: fixed;
+  top: 96px;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: var(--surface);
+  padding: 50px 24px;
+  overflow-y: overlay;
+  z-index: 4;
+  display: none;
+}
+
+.search-modal.active {
+  display: block;
+}
+.search-modal .label {
+  color: var(--primary-variant);
+  font-weight: var(--weight-bold);
+  margin-block-end: 8px;
 }
