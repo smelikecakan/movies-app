@@ -2,10 +2,26 @@
 
 import { sidebar } from "./sidebar.js";
 import { api_key, imageBaseURL, fetchDataFromServer } from "./api.js";
+import { createMovieCard } from "./movie-card.js";
 
 const pageContent = document.querySelector("[page-content]");
 
 sidebar();
+
+const homePageSections = [
+  {
+    title: "Yaklaşan Filmler",
+    path: "/movie/upcoming",
+  },
+  {
+    title: "Today's Trending Movies",
+    path: "/trending/movie/week",
+  },
+  {
+    title: "En İyi Derecelendirilmiş Filmler",
+    path: "/movie/top_rated",
+  },
+];
 
 const genreList = {
   asString(genreIdList) {
@@ -19,13 +35,14 @@ const genreList = {
 };
 
 fetchDataFromServer(
-  `https://api.themoviedb.org/3/genre/movie/list?${api_key}`,
+  `
+  https://api.themoviedb.org/3/genre/movie/list?api_key=${api_key}&language=tr-TR`,
   function ({ genres }) {
     for (const { id, name } of genres) {
       genreList[id] = name;
     }
     fetchDataFromServer(
-      `https://api.themoviedb.org/3/movie/popular?api_key=${api_key}&page=1`,
+      `https://api.themoviedb.org/3/movie/popular?api_key=${api_key}&page=1&language=tr-TR`,
       heroBanner
     );
   }
@@ -38,7 +55,7 @@ const heroBanner = function ({ results: movieList }) {
 
   banner.innerHTML = `
     <div class="banner-slider">
-      <div class="slider-item " slider-item>
+      <div class="slider-item " >
         <img
           src="./assets/images/slider-banner.jpg"
           alt="puss in boots: the last wish"
@@ -46,45 +63,16 @@ const heroBanner = function ({ results: movieList }) {
           loading="eager"
         />
         <div class="banner-content">
-          <h2 class="heading">Puss in Boots: The Last Wish</h2>
-          <div class="meta-list">
-            <div class="meta-item">2022</div>
-            <div class="meta-item card-badge">7.5</div>
-          </div>
-          <p class="genre">Animation,Action,Adventure</p>
-          <p class="banner-text">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
-          </p>
-          <a href="./detail.html" class="btn">
-            <img
-              src="./assets/images/play_circle.png"
-              width="24"
-              height="24"
-              aria-hidden="true"
-              alt="play circle"
-            />
-            <span class="span">watch now</span>
-          </a>
+         
+          
         </div>
       </div>
     </div>
-    <div class="slider-control">
+     <div class="slider-control">
       <div class="control-inner">
-        <button class="poster-box slider-item ">
-          <img
-            src="./assets/images/slider-control.jpg"
-            alt="slide to puss
-        in boots:the last wish"
-            loading="lazy"
-            draggable="false"
-            class="img-cover"
-          />
-        </button>
+        
       </div>
-    </div>
+    </div> 
   `;
   let controlItemIndex = 0;
 
@@ -104,7 +92,8 @@ const heroBanner = function ({ results: movieList }) {
     sliderItem.classList.add("slider-item");
     sliderItem.setAttribute("slider-item", "");
 
-    sliderItem.innerHTML = ` <img
+    sliderItem.innerHTML = `
+      <img
         src="${imageBaseURL}w1280${backdrop_path}"
         alt="${title}"
         class="img-cover"
@@ -112,27 +101,17 @@ const heroBanner = function ({ results: movieList }) {
       />
       <div class="banner-content">
         <h2 class="heading">${title}</h2>
-        <div class="meta-list">
-          <div class="meta-item">${release_date.split("-")[0]}</div>
+        <div class="meta-list"></div>
 
-          <div class="meta-item card-badge">${vote_average.toFixed(1)}</div>
-        </div>
-
-        <p class="genre">${genreList.asString(genre_ids)}</p>
+        <br />
 
         <p class="banner-text">${overview}</p>
-        <a href="./detail.html" class="btn">
-          <img
-            src="./assets/images/play_circle.png"
-            width="24"
-            height="24"
-            aria-hidden="true"
-            alt="play circle"
-          />
-          <span class="span">watch now</span>
-        </a>
+       
+        
+      </a>
+        
       </div>
-      `;
+    `;
 
     banner.querySelector(".banner-slider").appendChild(sliderItem);
 
@@ -154,5 +133,90 @@ const heroBanner = function ({ results: movieList }) {
     banner.querySelector(".control-inner").appendChild(controlItem);
   }
   pageContent.appendChild(banner);
-  //addHeroSlide();
+  addHeroSlide();
+
+  for (const { title, path } of homePageSections) {
+    fetchDataFromServer(
+      `
+    https://api.themoviedb.org/3${path}/?api_key=${api_key}&page=1&language=tr-TR`,
+      createMovieList,
+      title
+    );
+  }
+};
+
+const addHeroSlide = function () {
+  const sliderItems = document.querySelectorAll("[slider-item]");
+  const sliderControls = document.querySelectorAll("[slider-control]");
+
+  let lastSliderItem = sliderItems[0];
+  let lastSliderControl = sliderControls[0];
+
+  lastSliderItem.classList.add("active");
+  lastSliderControl.classList.add("active");
+
+  const sliderStart = function () {
+    lastSliderItem.classList.remove("active");
+
+    sliderItems[Number(this.getAttribute("slider-control"))].classList.add(
+      "active"
+    );
+    this.classList.add("active");
+
+    lastSliderItem = sliderItems[Number(this.getAttribute("slider-control"))];
+    lastSliderControl = this;
+  };
+
+  /*addEventOnElements(sliderControls, "click", sliderStart);*/
+  const addEventOnElements = function (elements, eventName, eventFunc) {
+    for (let i = 0; i < elements.length; i++) {
+      elements[i].addEventListener(eventName, eventFunc);
+    }
+  };
+
+  let currentSlider = 0;
+  const totalSliders = sliderItems.length;
+
+  const changeSlider = function () {
+    currentSlider++;
+    if (currentSlider >= totalSliders) {
+      currentSlider = 0;
+    }
+    sliderStart.call(sliderControls[currentSlider]);
+  };
+
+  let sliderInterval = setInterval(changeSlider, 5000);
+
+  addEventOnElements(sliderControls, "click", function () {
+    clearInterval(sliderInterval);
+    sliderStart.call(this);
+    currentSlider = Number(this.getAttribute("slider-control"));
+    sliderInterval = setInterval(changeSlider, 2000);
+  });
+};
+
+const createMovieList = function ({ results: movieList }, title) {
+  const movieListElem = document.createElement("section");
+  movieListElem.classList.add("movie-list");
+  movieListElem.ariaLabel = `${title}`;
+
+  movieListElem.innerHTML = `
+    <div class="title-wrapper">
+      <h3 class="title-large" id="title-large">${title}</h3>
+    </div>
+    <div class="slider-list">
+      <div class="slider-inner">
+        
+          
+        </div>
+      </div>
+    </div>
+  `;
+
+  for (const movie of movieList) {
+    const movieCard = createMovieCard(movie);
+
+    movieListElem.querySelector(".slider-inner").appendChild(movieCard);
+  }
+  pageContent.appendChild(movieListElem);
 };

@@ -12,3 +12,7 @@ const searchTogglers = document.querySelectorAll("[search-toggler]");
 addEventOnElements(searchTogglers, "click", function () {
   searchBox.classList.toggle("active");
 });
+
+const getMovieDetail = function (movieId) {
+  window.localStorage.setItem("movieId", String(movieId));
+};
