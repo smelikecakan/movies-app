@@ -1,0 +1,30 @@
+{
+  "name": "movies-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smelikecakan/movies-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/smelikecakan/movies-app/issues"
+  },
+  "homepage": "https://github.com/smelikecakan/movies-app#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parse": "^0.4.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "hbs": "^4.2.0",
+    "jsonwebtoken": "^9.0.0",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.22"
+  }
+}

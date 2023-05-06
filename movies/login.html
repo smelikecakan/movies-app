@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Giriş ve Üyelik</title>
+    <link rel="stylesheet" href="./assets/css/login.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="title-text">
+        <div class="title login">Giriş</div>
+        <div class="title signup">Üye Ol</div>
+      </div>
+      <div class="form-container">
+        <div class="slide-controls">
+          <input type="radio" name="slide" id="login" checked />
+          <input type="radio" name="slide" id="signup" />
+          <label for="login" class="slide login">Giriş</label>
+          <label for="signup" class="slide signup">Üyelik</label>
+          <div class="slider-tab"></div>
+        </div>
+        <div class="form-inner">
+          <form action="#" class="login">
+            <div class="field">
+              <input type="text" placeholder="Email " required />
+            </div>
+            <div class="field">
+              <input type="password" placeholder="Şifre" required />
+            </div>
+
+            <div class="field btn">
+              <div class="btn-layer"></div>
+              <input type="submit" value="Giriş Yap" />
+            </div>
+            <div class="pass-link"><a href="#">Şifremi unuttum?</a></div>
+          </form>
+          <form action="#" class="signup">
+            <div class="field">
+              <input type="text" placeholder="Kullanıcı Adı " required />
+            </div>
+            <div class="field">
+              <input type="text" placeholder="Email " required />
+            </div>
+            <div class="field">
+              <input type="password" placeholder="Şifre" required />
+            </div>
+            <div class="field">
+              <input type="password" placeholder="Şifre (Tekrar)" required />
+            </div>
+            <div class="field btn">
+              <div class="btn-layer"></div>
+              <input type="submit" value="Kaydol" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="./assets/js/script.js"></script>
+  </body>
+</html>
